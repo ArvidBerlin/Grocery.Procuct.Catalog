@@ -23,7 +23,7 @@
             <TextBox Text="{Binding Product.Price}" Padding="5" Margin="0,5,0,10" />
 
             <TextBlock Text="Category" />
-            <ComboBox x:Name="CategoryComboBox" Padding="5" Margin="0,5,0,0" />
+            <ComboBox x:Name="CategoryComboBox" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Padding="5" Margin="0,5,0,0" />
         </StackPanel>
 
         <StackPanel Grid.Row="1">

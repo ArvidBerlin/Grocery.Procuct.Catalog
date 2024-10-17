@@ -1,4 +1,5 @@
-﻿using Shared.Interfaces;
+﻿using Shared.Enums;
+using Shared.Interfaces;
 using Shared.Models;
 
 namespace MainApp_Console.Menus;
@@ -26,6 +27,15 @@ public class ProductMenu
         decimal.TryParse(Console.ReadLine(), out decimal price);
         price = Math.Round(price, 2);
         product.Price = price;
+
+        Console.WriteLine("\n\t Categories: ");
+        foreach (var category in Enum.GetValues(typeof(Category)))
+        {
+            Console.WriteLine($"\t {category}");
+        }
+        Console.Write("\n\t Choose category (0-7): ");
+        Category.TryParse(Console.ReadLine(), out Category selectedCategory);
+        product.Category = selectedCategory;
 
         var result = _productService.CreateProduct(product);
         switch (result)
@@ -75,7 +85,8 @@ public class ProductMenu
             {
                 Console.WriteLine($"\n\t Product ID: {product.Id}" +
                 $"\n\t Product: {product.Name}" +
-                $"\n\t Price: {product.Price} kr");
+                $"\n\t Price: {product.Price} kr" +
+                $"\n\t Category: {product.Category}");
             }
         }
         Console.Write("\n\t Press any key to continue. ");
@@ -98,7 +109,8 @@ public class ProductMenu
             {
                 Console.WriteLine($"\n\t Product ID: {product.Id}" +
                 $"\n\t Product: {product.Name}" +
-                $"\n\t Price: {product.Price} kr");
+                $"\n\t Price: {product.Price} kr" +
+                $"\n\t Category: {product.Category}");
             }
 
             Console.WriteLine("\n\t Please type or copy the Id of the product you want to remove from the inventory.");
@@ -143,7 +155,8 @@ public class ProductMenu
             {
                 Console.WriteLine($"\n\t Product ID: {printProduct.Id}" +
                 $"\n\t Product: {printProduct.Name}" +
-                $"\n\t Price: {printProduct.Price} kr");
+                $"\n\t Price: {printProduct.Price} kr" +
+                $"\n\t Category: {printProduct.Category}");
             }
 
             Console.WriteLine("\n\t Please type or copy the product ID you want to update.");
@@ -151,6 +164,7 @@ public class ProductMenu
             string productId = Console.ReadLine() ?? "";
 
             var product = new Product();
+            product.Id = productId;
 
             Console.Clear();
             Console.WriteLine("\n\t Please type in the new name and price for the product.");
@@ -163,7 +177,14 @@ public class ProductMenu
             price = Math.Round(price, 2);
             product.Price = price;
 
-            var updatedProduct = product;
+            Console.WriteLine("\n\t Categories: ");
+            foreach (var category in Enum.GetValues(typeof(Category)))
+            {
+                Console.WriteLine($"\t {category}");
+            }
+            Console.Write("\n\t Choose category (0-7): ");
+            Category.TryParse(Console.ReadLine(), out Category selectedCategory);
+            product.Category = selectedCategory;
 
             var result = _productService.Update(product);
 

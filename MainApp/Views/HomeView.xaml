@@ -28,8 +28,11 @@
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="{Binding DisplayProduct}" FontSize="14" VerticalAlignment="Center" />
-
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="{Binding DisplayProduct}" FontSize="14" VerticalAlignment="Center" />
+                            <TextBlock FontSize="10" Foreground="Gray" Text="{Binding Category}" />
+                        </StackPanel>
+                        
                         <StackPanel Grid.Column="1" Orientation="Horizontal" >
                             
                             <Button CommandParameter="{Binding .}" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 

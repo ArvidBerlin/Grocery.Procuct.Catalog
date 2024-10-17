@@ -11,5 +11,4 @@ public interface IProductService
     IEnumerable<Product> GetAllProductsFromList();
     StatusCodes Delete(string id);
     StatusCodes Update(Product product);
-    StatusCodes DeleteProduct(string id);
 }

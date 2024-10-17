@@ -18,7 +18,7 @@ public class ProductService(IFileService fileService) : IProductService
         {
             return StatusCodes.NoNameSet;
         }
-        if (product.Price <= 0)
+        if (product.Price == null! || product.Price <= 0 )
         {
             return StatusCodes.NoPriceSet;
         }
@@ -67,7 +67,10 @@ public class ProductService(IFileService fileService) : IProductService
 
         try
         {
-            existingProduct = product;
+            existingProduct.Name = product.Name;
+            existingProduct.Price = product.Price;
+            existingProduct.Category = product.Category;
+
             var result = _fileService.SaveToFile(JsonConvert.SerializeObject(_products, Formatting.Indented));
             return result;
         }
@@ -118,10 +121,5 @@ public class ProductService(IFileService fileService) : IProductService
         {
             return StatusCodes.Failed;
         }
-    }
-
-    public StatusCodes DeleteProduct(string id)
-    {
-        throw new NotImplementedException();
     }
 }

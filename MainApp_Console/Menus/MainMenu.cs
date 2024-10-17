@@ -43,6 +43,7 @@ public class MainMenu
     {
         Console.Clear();
         Console.WriteLine("\n\t Are you sure you want to exit the inventory? (y/n)");
+        Console.Write("\n\t ");
         var response = Console.ReadLine() ?? "n";
         if (response.ToLower() == "y")
         {

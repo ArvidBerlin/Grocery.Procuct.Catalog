@@ -3,13 +3,20 @@ using Shared.Models;
 using Shared.Interfaces;
 using Shared.Services;
 using Shared.Enums;
+using Newtonsoft.Json;
 
 namespace Shared.Tests.UnitTests;
 
 public class ProductService_Tests
 {
-    private readonly Mock<IFileService> _mockFileService = new();
-    private readonly Mock<IProductService> _mockProductService = new();
+    private readonly Mock<IFileService> _mockFileService;
+    private readonly IProductService _productService;
+
+    public ProductService_Tests()
+    {
+        _mockFileService = new Mock<IFileService>();
+        _productService = new ProductService(_mockFileService.Object);
+    }
 
     [Fact]
     public void CreateProduct__ShouldReturnSuccess__WhenProductIsCreated()
@@ -17,11 +24,9 @@ public class ProductService_Tests
         // Arrange
         var product = new Product { Id = Guid.NewGuid().ToString(), Name = "Socker", Price = 22 };
 
-        ProductService productService = new ProductService(_mockFileService.Object);
-
         // Act
-        StatusCodes result = productService.CreateProduct(product);
-        var products = productService.GetAllProductsFromList();
+        StatusCodes result = _productService.CreateProduct(product);
+        var products = _productService.GetAllProductsFromList();
 
         // Assert
         Assert.Equal(StatusCodes.Success, result);
@@ -35,16 +40,19 @@ public class ProductService_Tests
         var productId = Guid.NewGuid().ToString();
         var product = new Product { Id = productId, Name = "Socker", Price = 22 };
         var updatedProduct = new Product { Id = productId, Name = "Mjöl", Price = 32 };
+        var list = new List<Product> { updatedProduct };
+        var json = JsonConvert.SerializeObject(list);
 
-        ProductService productService = new ProductService(_mockFileService.Object);
+        _mockFileService.Setup(x => x.LoadFromFile()).Returns(json);
 
         //Act
-        StatusCodes result = productService.Update(updatedProduct);
-        var products = productService.GetAllProductsFromList();
-
+        StatusCodes result = _productService.CreateProduct(product);
+        var products = _productService.GetAllProductsFromList();
+        StatusCodes updateResult = _productService.Update(updatedProduct);
+        
         // Assert
-        Assert.Equal(StatusCodes.Success, result);
-        Assert.NotEqual(product, updatedProduct);
+        Assert.Equal(StatusCodes.Success, updateResult);
+        
     }
 
     [Fact]
@@ -52,14 +60,13 @@ public class ProductService_Tests
     {
         // Arrange
         var product = new Product { Id = Guid.NewGuid().ToString(), Name = "Socker", Price = 22 };
-        var products = new List<Product> { product };
-
-        ProductService productService = new ProductService(_mockFileService.Object);
+        var productList = new List<Product> { product };
 
         // Act
-        // StatusCodes result = productService.GetAllProductsFromList(); 
+        var result = _productService.GetAllProductsFromList();
 
         // Assert
+        // Assert.True(result);
     }
 
 
