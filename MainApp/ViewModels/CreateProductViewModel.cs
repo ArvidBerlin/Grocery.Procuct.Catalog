@@ -5,6 +5,7 @@ using Shared.Enums;
 using Shared.Interfaces;
 using Shared.Models;
 using System.Collections.ObjectModel;
+using System.Xml.Linq;
 
 namespace MainApp.ViewModels;
 
@@ -16,13 +17,17 @@ public partial class CreateProductViewModel : ObservableObject
     public ObservableCollection<Category> Categories { get; } = new ObservableCollection<Category>();
 
     [ObservableProperty]
-    private string _savingMessage;
+    private string noName;
+
+    [ObservableProperty]
+    private string noPrice;
 
     public CreateProductViewModel(IServiceProvider serviceProvider, IProductService productService)
     {
         _serviceProvider = serviceProvider;
         _productService = productService;
-        _savingMessage = "";
+        noName = NoName;
+        noPrice = NoPrice;
 
         foreach (var category in Enum.GetValues(typeof(Category)))
         {
@@ -33,32 +38,45 @@ public partial class CreateProductViewModel : ObservableObject
     [ObservableProperty]
     private Product product = new();
 
+
     [RelayCommand]
     public void Save()
     {
-
-        if (Product.Price == null || Product.Price <= 0)
+        try
         {
-            SavingMessage = "saknar pris";
-            return;
+            if (string.IsNullOrWhiteSpace(Product.Name))
+            {
+                NoName = "No name was given to product.";
+            }
+            else
+            {
+                NoName = "";
+            } 
+
+            if (Product.Price <= 0 || Product.Price == null!)
+            {
+                NoPrice = "Product price can't be 0, please set a price.";
+            }
+            else
+            {
+                NoPrice = "";
+            }
+
+            var result = _productService.CreateProduct(Product);
+
+            if (result == Shared.Enums.StatusCodes.Success)
+            {
+                var viewModel = _serviceProvider.GetRequiredService<MainWindowViewModel>();
+                viewModel.CurrentViewModel = _serviceProvider.GetRequiredService<HomeViewModel>();
+            }
         }
 
-        var result = _productService.CreateProduct(Product);
-        if ( result == Shared.Enums.StatusCodes.Exists)
+        catch
         {
-           SavingMessage  = "Finns redan";
+
         }
 
-        if (result == Shared.Enums.StatusCodes.NoPriceSet)
-        {
-            SavingMessage = "Saknar prisssss";
-        }
-
-        if (result == Shared.Enums.StatusCodes.Success)
-        {
-            var viewModel = _serviceProvider.GetRequiredService<MainWindowViewModel>();
-            viewModel.CurrentViewModel = _serviceProvider.GetRequiredService<HomeViewModel>();
-        }
+        
 
     }
 

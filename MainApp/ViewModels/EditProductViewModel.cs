@@ -5,6 +5,7 @@ using Shared.Enums;
 using Shared.Interfaces;
 using Shared.Models;
 using System.Collections.ObjectModel;
+using System.Xml.Linq;
 
 namespace MainApp.ViewModels;
 
@@ -15,10 +16,18 @@ public partial class EditProductViewModel : ObservableObject
 
     public ObservableCollection<Category> Categories { get; } = new ObservableCollection<Category>();
 
+    [ObservableProperty]
+    private string noName;
+
+    [ObservableProperty]
+    private string noPrice;
+
     public EditProductViewModel(IServiceProvider serviceProvider, IProductService productService)
     {
         _serviceProvider = serviceProvider;
         _productService = productService;
+        noName = NoName;
+        noPrice = NoPrice;
 
         foreach (var category in Enum.GetValues(typeof(Category)))
         {
@@ -32,11 +41,36 @@ public partial class EditProductViewModel : ObservableObject
     [RelayCommand]
     public void Save()
     {
-        var result = _productService.Update(Product);
-        if (result == Shared.Enums.StatusCodes.Success)
+        try
         {
-            var viewModel = _serviceProvider.GetRequiredService<MainWindowViewModel>();
-            viewModel.CurrentViewModel = _serviceProvider.GetRequiredService<HomeViewModel>();
+            if (string.IsNullOrWhiteSpace(Product.Name))
+            {
+                NoName = "No name was given to product.";
+            }
+            else
+            {
+                NoName = "";
+            }
+
+            if (Product.Price <= 0 || Product.Price == null!)
+            {
+                NoPrice = "Product price can't be 0, please set a price.";
+            }
+            else
+            {
+                NoPrice = "";
+            }
+
+            var result = _productService.Update(Product);
+            if (result == Shared.Enums.StatusCodes.Success)
+            {
+                var viewModel = _serviceProvider.GetRequiredService<MainWindowViewModel>();
+                viewModel.CurrentViewModel = _serviceProvider.GetRequiredService<HomeViewModel>();
+            }
+        }
+        catch
+        {
+
         }
     }
 

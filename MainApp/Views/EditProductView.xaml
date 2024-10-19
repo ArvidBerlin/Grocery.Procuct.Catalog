@@ -17,13 +17,18 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
+            
             <TextBlock Text="Product name" />
-            <TextBox Text="{Binding Product.Name}" Padding="5" Margin="0,5,0,10" />
+            <TextBox Text="{Binding Product.Name}" Padding="5" Margin="0,5,0,5" />
+            <TextBlock Text="{Binding NoName}" Foreground="Gray" Margin="0,0,0,5" />
+            
             <TextBlock Text="Price" />
-            <TextBox Text="{Binding Product.Price}" Padding="5" Margin="0,5,0,10" />
+            <TextBox Text="{Binding Product.Price}" Padding="5" Margin="0,5,0,5" />
+            <TextBlock Text="{Binding NoPrice}" Foreground="Gray" Margin="0,0,0,5 " />
 
             <TextBlock Text="Category" />
             <ComboBox x:Name="CategoryComboBox" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Padding="5" Margin="0,5,0,0" />
+            
         </StackPanel>
 
         <StackPanel Grid.Row="1">

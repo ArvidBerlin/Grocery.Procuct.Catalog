@@ -31,41 +31,61 @@ public class ProductMenu
         Console.WriteLine("\n\t Categories: ");
         foreach (var category in Enum.GetValues(typeof(Category)))
         {
-            Console.WriteLine($"\t {category}");
+            Console.WriteLine($"\t {(int)category} {category}");
         }
         Console.Write("\n\t Choose category (0-7): ");
-        Category.TryParse(Console.ReadLine(), out Category selectedCategory);
-        product.Category = selectedCategory;
+        string input = Console.ReadLine()!;
 
-        var result = _productService.CreateProduct(product);
-        switch (result)
+        if (int.TryParse(input, out int inputNumber))
         {
-            case Shared.Enums.StatusCodes.Success:
-                Console.WriteLine("\n\t Product was added to the inventory.");
-                break;
+            if (inputNumber < 0 || inputNumber > 7)
+            {
+                Console.WriteLine("\n\t Product was not placed in a category. You need to choose a categorynumber between 0-7.");
+                Console.Write("\n\t Press any key to continue. ");
+            }
+            else
+            {
+                Category selectedCategory = (Category)inputNumber;
 
-            case Shared.Enums.StatusCodes.Exists:
-                Console.WriteLine("\n\t Product with same name already exists in the inventory.");
-                break;
+                product.Category = selectedCategory;
 
-            case Shared.Enums.StatusCodes.NoNameSet:
-                Console.WriteLine("\n\t No name was given to product.");
-                break;
+                var result = _productService.CreateProduct(product);
+                switch (result)
+                {
+                    case Shared.Enums.StatusCodes.Success:
+                        Console.WriteLine("\n\t Product was added to the inventory.");
+                        break;
 
-            case Shared.Enums.StatusCodes.NoPriceSet:
-                Console.WriteLine("\n\t Product price can't be 0, please set a price.");
-                break;
+                    case Shared.Enums.StatusCodes.Exists:
+                        Console.WriteLine("\n\t Product with same name already exists in the inventory.");
+                        break;
 
-            case Shared.Enums.StatusCodes.NoCategorySet:
-                Console.WriteLine("\n\t Product was not placed in a category.");
-                break;
+                    case Shared.Enums.StatusCodes.NoNameSet:
+                        Console.WriteLine("\n\t No name was given to product.");
+                        break;
 
-            case Shared.Enums.StatusCodes.Failed:
-                Console.WriteLine("\n\t Something went wrong. Product was not added to the inventory.");
-                break;
+                    case Shared.Enums.StatusCodes.NoPriceSet:
+                        Console.WriteLine("\n\t Product price can't be 0, please set a price.");
+                        break;
+
+                    case Shared.Enums.StatusCodes.NoCategorySet:
+                        Console.WriteLine("\n\t Product was not placed in a category.");
+                        break;
+
+                    case Shared.Enums.StatusCodes.Failed:
+                        Console.WriteLine("\n\t Something went wrong. Product was not added to the inventory.");
+                        break;
+                }
+
+                Console.Write("\n\t Press any key to continue. ");
+            }
         }
 
-        Console.Write("\n\t Press any key to continue. ");
+        else
+        {
+            Console.WriteLine("\n\t Invalid option! Please pick a valid number between 0-7.");
+            Console.Write("\n\t Press any key to continue. ");
+        }
     }
 
     public void GetAllProductsFromListMenu()
@@ -180,38 +200,58 @@ public class ProductMenu
             Console.WriteLine("\n\t Categories: ");
             foreach (var category in Enum.GetValues(typeof(Category)))
             {
-                Console.WriteLine($"\t {category}");
+                Console.WriteLine($"\t {(int)category} {category}");
             }
             Console.Write("\n\t Choose category (0-7): ");
-            Category.TryParse(Console.ReadLine(), out Category selectedCategory);
-            product.Category = selectedCategory;
+            string input = Console.ReadLine()!;
 
-            var result = _productService.Update(product);
-
-            switch(result)
+            if (int.TryParse(input, out int inputNumber))
             {
-                case Shared.Enums.StatusCodes.Success:
-                    Console.WriteLine("\n\t Product was updated successfully.");
-                    break;
-                
-                case Shared.Enums.StatusCodes.NoNameSet:
-                    Console.WriteLine("\n\t No name was given to product.");
-                    break;
+                if (inputNumber < 0 || inputNumber > 7)
+                {
+                    Console.WriteLine("\n\t Product was not placed in a category. You need to choose a categorynumber between 0-7.");
+                    Console.Write("\n\t Press any key to continue. ");
+                }
+                else
+                {
+                    Category selectedCategory = (Category)inputNumber;
 
-                case Shared.Enums.StatusCodes.NoPriceSet:
-                    Console.WriteLine("\n\t Product price can't be 0, please set a price.");
-                    break;
+                    product.Category = selectedCategory;
 
-                case Shared.Enums.StatusCodes.NoCategorySet:
-                    Console.WriteLine("\n\t Product was not placed in a category.");
-                    break;
+                    var result = _productService.Update(product);
 
-                case Shared.Enums.StatusCodes.Failed:
-                    Console.WriteLine("\n\t Something went wrong. Product was not added to the inventory.");
-                    break;
+                    switch (result)
+                    {
+                        case Shared.Enums.StatusCodes.Success:
+                            Console.WriteLine("\n\t Product was updated successfully.");
+                            break;
+
+                        case Shared.Enums.StatusCodes.NoNameSet:
+                            Console.WriteLine("\n\t No name was given to product.");
+                            break;
+
+                        case Shared.Enums.StatusCodes.NoPriceSet:
+                            Console.WriteLine("\n\t Product price can't be 0, please set a price.");
+                            break;
+
+                        case Shared.Enums.StatusCodes.NoCategorySet:
+                            Console.WriteLine("\n\t Product was not placed in a category.");
+                            break;
+
+                        case Shared.Enums.StatusCodes.Failed:
+                            Console.WriteLine("\n\t Something went wrong. Product was not added to the inventory.");
+                            break;
+                    }
+
+                    Console.Write("\n\t Press any key to continue. ");
+                }
             }
 
-            Console.Write("\n\t Press any key to continue. ");
+            else
+            {
+                Console.WriteLine("\n\t Invalid option! Please pick a valid number between 0-7.");
+                Console.Write("\n\t Press any key to continue. ");
+            }
         }
     }
 }

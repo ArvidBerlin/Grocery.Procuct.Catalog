@@ -22,7 +22,7 @@ public class ProductService(IFileService fileService) : IProductService
         {
             return StatusCodes.NoPriceSet;
         }
-        if (product.Category == null!)
+        if (!Enum.IsDefined(typeof(Category), product.Category!))
         {
             return StatusCodes.NoCategorySet;
         }
@@ -60,7 +60,7 @@ public class ProductService(IFileService fileService) : IProductService
         {
             return StatusCodes.NoPriceSet;
         }
-        if (product.Category == null!)
+        if (!Enum.IsDefined(typeof(Category), product.Category!))
         {
             return StatusCodes.NoCategorySet;
         }

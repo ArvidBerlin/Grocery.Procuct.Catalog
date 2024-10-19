@@ -3,6 +3,7 @@ using MainApp.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Interfaces;
 using Shared.Services;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 

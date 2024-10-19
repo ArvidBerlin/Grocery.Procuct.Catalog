@@ -59,15 +59,37 @@ public class ProductService_Tests
     public void GetAllProductsFromList__ShouldReturnListOfProducts()
     {
         // Arrange
-        var product = new Product { Id = Guid.NewGuid().ToString(), Name = "Socker", Price = 22 };
-        var productList = new List<Product> { product };
+        var product = new Product { Id = Guid.NewGuid().ToString(), Name = "Socker", Price = 22.0m };
+        var list = new List<Product> { product };
+        var json = JsonConvert.SerializeObject(list);
+
+        _mockFileService.Setup(x => x.LoadFromFile()).Returns(json);
 
         // Act
         var result = _productService.GetAllProductsFromList();
+        var resultJson = JsonConvert.SerializeObject(result);
 
         // Assert
-        // Assert.True(result);
+        Assert.Equal(json, resultJson);
     }
 
+    [Fact]
+    public void Delete__ShouldReturnSuccess__WhenProductIsDeleted()
+    {
+        // Arrange
+        var productId = Guid.NewGuid().ToString();
+        var product = new Product { Id = productId, Name = "Socker", Price = 22 };
+        var list = new List<Product> { product };
+        var json = JsonConvert.SerializeObject(list);
 
+        _mockFileService.Setup(x => x.LoadFromFile()).Returns(json);
+
+        //Act
+        StatusCodes result = _productService.CreateProduct(product);
+        var products = _productService.GetAllProductsFromList();
+        StatusCodes deleteResult = _productService.Delete(productId);
+
+        // Assert
+        Assert.Equal(StatusCodes.Success, deleteResult);
+    }
 }
