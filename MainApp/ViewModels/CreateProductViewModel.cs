@@ -71,13 +71,7 @@ public partial class CreateProductViewModel : ObservableObject
             }
         }
 
-        catch
-        {
-
-        }
-
-        
-
+        catch { }
     }
 
     [RelayCommand]

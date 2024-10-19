@@ -4,6 +4,10 @@
                     xmlns:views="clr-namespace:MainApp.Views"
                     >
 
+    <DataTemplate DataType="{x:Type viewmodels:StartupViewModel}">
+        <views:StartupView />
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type viewmodels:HomeViewModel }">
         <views:HomeView />
     </DataTemplate>

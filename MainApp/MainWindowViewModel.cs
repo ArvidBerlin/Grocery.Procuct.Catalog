@@ -11,7 +11,7 @@ public partial class MainWindowViewModel : ObservableObject
     public MainWindowViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        currentViewModel = _serviceProvider.GetRequiredService<HomeViewModel>();
+        currentViewModel = _serviceProvider.GetRequiredService<StartupViewModel>();
     }
 
     [ObservableProperty]
