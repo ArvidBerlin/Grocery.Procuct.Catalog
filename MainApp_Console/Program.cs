@@ -17,7 +17,7 @@ class Program
         _serviceProvider = serviceCollection.BuildServiceProvider();
 
         var menuService = _serviceProvider!.GetRequiredService<MainMenu>();
-        menuService.PrintMainMenu();
+        menuService.PrintMainMenu(); // Startar applikationen vid menyutskriften
     }
 
     static void ConfigureServices(IServiceCollection services)

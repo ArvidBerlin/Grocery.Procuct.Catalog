@@ -7,7 +7,7 @@
              xmlns:viewmodels="clr-namespace:MainApp.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewmodels:EditProductViewModel}"
              mc:Ignorable="d" 
-             Background="White"
+             Background="#d7e7f5"
              d:DesignHeight="600" d:DesignWidth="400">
 
     <Grid Margin="25">
@@ -32,8 +32,8 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1">
-            <Button Command="{Binding SaveCommand}" Content="Update" Padding="10" Margin="0,10,0,0" Background="Transparent" />
-            <Button Command="{Binding CancelCommand}" Content="Cancel" Padding="10" Margin="0,10,0,0" Background="Transparent" />
+            <Button Command="{Binding SaveCommand}" Content="Update" Padding="10" Margin="0,10,0,0" Background="#80d189" />
+            <Button Command="{Binding CancelCommand}" Content="Cancel" Padding="10" Margin="0,10,0,0" Background="#f5845b" />
         </StackPanel>
 
     </Grid>

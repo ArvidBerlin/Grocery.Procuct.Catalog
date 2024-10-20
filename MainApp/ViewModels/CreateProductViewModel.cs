@@ -16,9 +16,11 @@ public partial class CreateProductViewModel : ObservableObject
 
     public ObservableCollection<Category> Categories { get; } = new ObservableCollection<Category>();
 
+    // Property för att ge felmeddelande ifall inget namn skrivs
     [ObservableProperty]
     private string noName;
 
+    // Property för att ge felmeddelande ifall inget pris skrivs
     [ObservableProperty]
     private string noPrice;
 
@@ -38,7 +40,7 @@ public partial class CreateProductViewModel : ObservableObject
     [ObservableProperty]
     private Product product = new();
 
-
+    // Kommando med metod för att spara värden av en produkt 
     [RelayCommand]
     public void Save()
     {
@@ -62,6 +64,7 @@ public partial class CreateProductViewModel : ObservableObject
                 NoPrice = "";
             }
 
+            // Skickar värdena till metod för att skapa och spara en produkt
             var result = _productService.CreateProduct(Product);
 
             if (result == Shared.Enums.StatusCodes.Success)
@@ -74,6 +77,7 @@ public partial class CreateProductViewModel : ObservableObject
         catch { }
     }
 
+    // Kommando med metod för att gå tillbaka till "Home"-sidan
     [RelayCommand]
     public void Cancel()
     {

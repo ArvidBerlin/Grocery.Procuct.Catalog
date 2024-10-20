@@ -16,6 +16,7 @@ public partial class StartupViewModel : ObservableObject
         _productService = productService;
     }
 
+    // Kommando med metod för att gå till "Home"-sidan
     [RelayCommand]
     public void Start()
     {

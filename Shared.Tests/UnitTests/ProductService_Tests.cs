@@ -56,7 +56,7 @@ public class ProductService_Tests
     }
 
     [Fact]
-    public void GetAllProductsFromList__ShouldReturnListOfProducts()
+    public void GetAllProductsFromList__ShouldReturnListOfProducts() // Fick hjälp från ChatGPT, för att jämföra listorna
     {
         // Arrange
         var product = new Product { Id = Guid.NewGuid().ToString(), Name = "Socker", Price = 22.0m };

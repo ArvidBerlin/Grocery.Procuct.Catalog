@@ -13,6 +13,7 @@ public class MainMenu
         _productMenu = productMenu;
     }
 
+    // Metod för att skriva ut menyn
     public void PrintMainMenu()
     {
         while (true)
@@ -28,7 +29,8 @@ public class MainMenu
             Console.Write("\n\t Enter option: ");
 
             var result = MenuOptions(Console.ReadLine() ?? "", _productMenu);
-            if (!result)
+            // Om användaren inte skriver in en siffra mellan 0-4
+            if (!result) 
             {
                 Console.Clear();
                 Console.WriteLine("\n\t Invalid option! Please pick a menu option between 1-4, " +
@@ -39,6 +41,7 @@ public class MainMenu
         }  
     }
 
+    // Metod för att stänga ner applikationen
     public void ExitApplicationMenu()
     {
         Console.Clear();
@@ -51,6 +54,7 @@ public class MainMenu
         }
     }
 
+    // Metod för att aktivera menyalternativ beroende på användarinmatning
     public bool MenuOptions(string selectedOption, ProductMenu productMenu)
     {
         if (int.TryParse(selectedOption, out int option))

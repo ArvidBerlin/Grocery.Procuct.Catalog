@@ -12,6 +12,7 @@ public class ProductService(IFileService fileService) : IProductService
     private List<Product> _products = [];
     private readonly IFileService _fileService = fileService;
 
+    // Metod för att kontrollera värden som skickats in och sedan skapa en produkt, samt spara ner genom att anropa SaveToFile-metoden
     public StatusCodes CreateProduct(Product product)
     {
         if (string.IsNullOrWhiteSpace(product.Name))
@@ -38,12 +39,13 @@ public class ProductService(IFileService fileService) : IProductService
             return result;
         }
 
-        catch (Exception  ex)
+        catch (Exception ex)
         {
             return StatusCodes.Failed;
         }
     }
 
+    // Metod för att kontrollera värden som skickats in och sedan uppdatera en produkt genom att ersätta värdena, samt spara ner genom att anropa SaveToFile-metoden
     public StatusCodes Update(Product product)
     {
         var existingProduct = _products.FirstOrDefault(x => x.Id == product.Id);
@@ -80,6 +82,7 @@ public class ProductService(IFileService fileService) : IProductService
         }
     }
 
+    // Metod för att hämta alla produkter från sparade listan, genom att anropa LoadFromFile-metoden
     public IEnumerable<Product> GetAllProductsFromList()
     {
         try
@@ -99,6 +102,7 @@ public class ProductService(IFileService fileService) : IProductService
         return _products;
     }
 
+    // Metod för att ta bort en produkt vars id matchar det som skickats in, samt spara ner till filen, då utan den borttagna produkten, genom att anropa SaveToFile-metoden
     public StatusCodes Delete(string id)
     {
         try

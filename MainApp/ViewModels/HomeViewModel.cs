@@ -20,10 +20,10 @@ public partial class HomeViewModel : ObservableObject
         UpdateProducts();
     }
 
-
     [ObservableProperty]
     private ObservableCollection<Product> products = [];
 
+    // Kommando med metod för att gå till "Create Produkt"-sidan
     [RelayCommand]
     public void Create()
     {
@@ -31,6 +31,15 @@ public partial class HomeViewModel : ObservableObject
         viewModel.CurrentViewModel = _serviceProvider.GetRequiredService<CreateProductViewModel>();
     }
 
+    // Kommando med metod för att gå till "Startup"-sidan
+    [RelayCommand]
+    public void Back()
+    {
+        var viewModel = _serviceProvider.GetRequiredService<MainWindowViewModel>();
+        viewModel.CurrentViewModel = _serviceProvider.GetRequiredService<StartupViewModel>();
+    }
+
+    // Kommando med metod för att gå till "Edit Product"-sidan
     [RelayCommand]
     public void Edit(Product product)
     {
@@ -41,6 +50,7 @@ public partial class HomeViewModel : ObservableObject
         viewModel.CurrentViewModel = editProductViewModel;
     }
 
+    // Kommando med metod för att ta bort en produkt och sedan uppdatera listan
     [RelayCommand]
     public void Delete(string id)
     {
@@ -48,6 +58,7 @@ public partial class HomeViewModel : ObservableObject
         UpdateProducts();
     }
 
+    // Metod som uppdaterar listan
     public void UpdateProducts()
     {
         Products.Clear();

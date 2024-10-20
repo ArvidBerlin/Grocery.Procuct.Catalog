@@ -7,7 +7,7 @@
              xmlns:viewmodels="clr-namespace:MainApp.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewmodels:CreateProductViewModel}"
              mc:Ignorable="d" 
-             Background="White"
+             Background="#d7e7f5"
              d:DesignHeight="600" d:DesignWidth="400">
     
     <Grid Margin="25">
@@ -18,7 +18,7 @@
 
         <StackPanel Grid.Row="0">
             <TextBlock Text="Product name" />
-            <TextBox Text="{Binding Product.Name}" Padding="5" Margin="0,5,0,5" />
+            <TextBox x:Name="Product_Name" Text="{Binding Product.Name}" Padding="5" Margin="0,5,0,5" />
             <TextBlock Text="{Binding NoName}" Foreground="Gray" Margin="0,0,0,5" />
             <TextBlock Text="Price" />
             <TextBox Text="{Binding Product.Price}" Padding="5" Margin="0,5,0,5" />
@@ -30,8 +30,8 @@
 
         <StackPanel Grid.Row="1">
             <TextBlock Text="{Binding SavingMessage}" />
-            <Button Command="{Binding SaveCommand}" Content="Save" Padding="10" Margin="0,10,0,0" Background="Transparent" />
-            <Button Command="{Binding CancelCommand}" Content="Cancel" Padding="10" Margin="0,10,0,0" Background="Transparent" />
+            <Button Command="{Binding SaveCommand}" Content="Save" Padding="10" Margin="0,10,0,0" Background="#80d189" />
+            <Button Command="{Binding CancelCommand}" Content="Cancel" Padding="10" Margin="0,10,0,0" Background="#f5845b" />
         </StackPanel>
         
     </Grid>

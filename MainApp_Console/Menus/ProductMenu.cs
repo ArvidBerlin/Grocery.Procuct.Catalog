@@ -13,6 +13,8 @@ public class ProductMenu
         _productService = productService;
     }
 
+    // Metod för att spara värden för en produkt, och skicka till CreateProduct-metoden
+    // Fick hjälp av ChatGPT för att skriva felsökningen av Category
     public void CreateProductMenu()
     {
         var product = new Product();
@@ -36,20 +38,24 @@ public class ProductMenu
         Console.Write("\n\t Choose category (0-7): ");
         string input = Console.ReadLine()!;
 
+        // Kontrollerar att det användaren inmatar är en siffra
         if (int.TryParse(input, out int inputNumber))
         {
+            // Kontrollerar att den inmatade siffran är ett tillåtet siffervärde för en av enumsen (0-7)
             if (inputNumber < 0 || inputNumber > 7)
             {
                 Console.WriteLine("\n\t Product was not placed in a category. You need to choose a categorynumber between 0-7.");
                 Console.Write("\n\t Press any key to continue. ");
             }
-            else
+            else // Om då siffran är ok (0-7), spara värdet som produktens kategori och skicka iväg till CreateProduct-metoden
             {
                 Category selectedCategory = (Category)inputNumber;
 
                 product.Category = selectedCategory;
 
                 var result = _productService.CreateProduct(product);
+
+                // Några av dessa cases är nog överflödiga (exempelvis NoCategorySet pga den tidigare kontrollen)
                 switch (result)
                 {
                     case Shared.Enums.StatusCodes.Success:
@@ -81,13 +87,14 @@ public class ProductMenu
             }
         }
 
-        else
+        else // Om inte användaren skrev in en siffra
         {
             Console.WriteLine("\n\t Invalid option! Please pick a valid number between 0-7.");
             Console.Write("\n\t Press any key to continue. ");
         }
     }
 
+    // Metod för att använda GetAllProductsFromList-metoden och skriva ut alla produkter
     public void GetAllProductsFromListMenu()
     {
         var products = _productService.GetAllProductsFromList();
@@ -112,6 +119,7 @@ public class ProductMenu
         Console.Write("\n\t Press any key to continue. ");
     }
 
+    // Metod för att skriva ut alla produkter från GetAllProductsFromList-metoden, för att sedan välja en produkt att radera byggt på Id
     public void DeleteProductMenu()
     {
         var products = _productService.GetAllProductsFromList();
@@ -158,6 +166,8 @@ public class ProductMenu
         }
     }
 
+    // Metod för att skriva ut alla produkter från GetAllProductsFromList-metoden, för att sedan välja en produkt att uppdatera byggt på Id
+    // Använde mig av samma hjälp här från ChatGPT för felsökning av Category
     public void UpdateProductMenu()
     {
         var products = _productService.GetAllProductsFromList();
@@ -220,6 +230,7 @@ public class ProductMenu
 
                     var result = _productService.Update(product);
 
+                    // Även här kan nog några cases vara lite överflödiga
                     switch (result)
                     {
                         case Shared.Enums.StatusCodes.Success:

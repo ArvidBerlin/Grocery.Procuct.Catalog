@@ -8,7 +8,7 @@
              xmlns:models="clr-namespace:Shared.Models;assembly=Shared"
              d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
              mc:Ignorable="d" 
-             Background="White"
+             Background="#d7e7f5"
              d:DesignHeight="600" d:DesignWidth="400">
     
     <Grid Margin="25">
@@ -17,7 +17,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Command="{Binding CreateCommand}" FontSize="14" FontFamily="Segoe MDL2 Assets" Content="&#xE710;" Background="Transparent" HorizontalAlignment="Right" Padding="10" />
+        <Button Grid.Row="0" Command="{Binding BackCommand}" FontSize="14" FontFamily="Segoe MDL2 Assets" Content="&#xE72B;" Background="#f5845b" HorizontalAlignment="Left" Padding="10" />
+        <Button Grid.Row="0" Command="{Binding CreateCommand}" FontSize="14" FontFamily="Segoe MDL2 Assets" Content="&#xE710;" Background="#80d189" HorizontalAlignment="Right" Padding="10" />
 
         <ListView Grid.Row="1" ItemsSource="{Binding Products}" HorizontalContentAlignment="Stretch" SelectionMode="Single" Margin="0,20,0,0" >
             <ListView.ItemTemplate>
@@ -34,13 +35,63 @@
                         </StackPanel>
                         
                         <StackPanel Grid.Column="1" Orientation="Horizontal" >
-                            
-                            <Button CommandParameter="{Binding .}" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                                    FontFamily="Segoe MDL2 Assets" Content="&#xE70F;" FontSize="14" BorderThickness="0" Background="Transparent" />
 
-                            <Button CommandParameter="{Binding Id}" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                                    FontFamily="Segoe MDL2 Assets" Content="&#xE74D;" FontSize="14" BorderThickness="0" Background="Transparent" Margin="10,0,0,0" />
-                       
+                            <Button CommandParameter="{Binding .}" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="BorderThickness" Value="0" />
+                                        <Setter Property="FontSize" Value="14" />
+                                        <Setter Property="Foreground" Value="Black" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="Transparent">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Foreground" Value="#80d189" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE70F;" />
+
+                            </Button>
+
+                            <Button CommandParameter="{Binding Id}" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" >
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="BorderThickness" Value="0" />
+                                        <Setter Property="FontSize" Value="14" />
+                                        <Setter Property="Foreground" Value="Black" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="Transparent">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Foreground" Value="#f5845b" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+
+                                <TextBlock Margin="10,0,0,0" FontFamily="Segoe MDL2 Assets" Text="&#xE74D;" />
+
+                            </Button>
+
                         </StackPanel>
 
                     </Grid>

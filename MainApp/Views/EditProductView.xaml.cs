@@ -9,6 +9,7 @@ public partial class EditProductView : UserControl
     {
         InitializeComponent();
 
+        // Fyller en Combobox med värdena från "Category"-enums
         CategoryComboBox.ItemsSource = Enum.GetValues(typeof(Category));
         CategoryComboBox.SelectedIndex = 0;
     }
