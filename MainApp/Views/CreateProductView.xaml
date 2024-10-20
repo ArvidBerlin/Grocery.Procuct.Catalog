@@ -19,7 +19,7 @@
         <StackPanel Grid.Row="0">
             <TextBlock Text="Product name" />
             <TextBox x:Name="Product_Name" Text="{Binding Product.Name}" Padding="5" Margin="0,5,0,5" />
-            <TextBlock Text="{Binding NoName}" Foreground="Gray" Margin="0,0,0,5" />
+            <TextBlock Text="{Binding CombinedNameErrors}" Foreground="Gray" Margin="0,0,0,5" />
             <TextBlock Text="Price" />
             <TextBox Text="{Binding Product.Price}" Padding="5" Margin="0,5,0,5" />
             <TextBlock Text="{Binding NoPrice}" Foreground="Gray" Margin="0,0,0,5" />

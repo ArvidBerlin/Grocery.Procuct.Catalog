@@ -24,12 +24,32 @@ public partial class CreateProductViewModel : ObservableObject
     [ObservableProperty]
     private string noPrice;
 
+    // property för att ge felmeddelande ifall produkt med samma namn redan existerar i listan
+    [ObservableProperty]
+    private string sameName;
+
+    // Property som kombinerar felmeddelanden av NoName och SameName, för att skriva ut beroende på vilket fel som sker
+    // Samt metoder som uppdaterar propertyn när någon av NoName eller SameName ändras
+    // Hjälp från ChatGPT
+    public string CombinedNameErrors => $"{NoName}\n{SameName}".Trim();
+
+    partial void OnNoNameChanged(string value)
+    {
+        OnPropertyChanged(nameof(CombinedNameErrors));
+    }
+
+    partial void OnSameNameChanged(string value)
+    {
+        OnPropertyChanged(nameof(CombinedNameErrors));
+    }
+
     public CreateProductViewModel(IServiceProvider serviceProvider, IProductService productService)
     {
         _serviceProvider = serviceProvider;
         _productService = productService;
-        noName = NoName;
-        noPrice = NoPrice;
+        noName = "";
+        noPrice = "";
+        sameName = "";
 
         foreach (var category in Enum.GetValues(typeof(Category)))
         {
@@ -62,6 +82,15 @@ public partial class CreateProductViewModel : ObservableObject
             else
             {
                 NoPrice = "";
+            }
+
+            if (_productService.GetAllProductsFromList().Any(x => x.Name == Product.Name))
+            {
+                SameName = "Product with same name already exists in the inventory.";
+            }
+            else
+            {
+                SameName = "";
             }
 
             // Skickar värdena till metod för att skapa och spara en produkt
